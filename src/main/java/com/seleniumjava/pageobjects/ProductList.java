@@ -19,6 +19,7 @@ public class ProductList {
         PageFactory.initElements(driver, this);
     }
 
+    //element
     @FindBy(css = ".inventory_item")
     List<WebElement> listProducts;
 

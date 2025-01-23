@@ -12,24 +12,25 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import com.seleniumjava.pageobjects.CheckoutInformationData;
 import com.seleniumjava.pageobjects.Login;
 import com.seleniumjava.pageobjects.ProductList;
 
 public class CheckoutPO {
     
-        @Test(dataProvider = "getData")
-        public void checkoutProduct(HashMap<String, String>inputMap) throws InterruptedException {
-            //setup driver
-            System.setProperty("webdriver.chrome.driver", "D:/Mini Bootcamp Gratis Web Automation/chromedriver-win64/chromedriver.exe");
-            WebDriver driver = new ChromeDriver();
+    @Test(dataProvider = "getData")
+    public void checkoutProduct(HashMap<String, String>inputMap) throws InterruptedException {
+        //setup driver
+        System.setProperty("webdriver.chrome.driver", "D:/Mini Bootcamp Gratis Web Automation/chromedriver-win64/chromedriver.exe");
+        WebDriver driver = new ChromeDriver();
     
-            driver.manage().window().maximize();
+        driver.manage().window().maximize();
     
-            driver.get("https://www.saucedemo.com/");
+        driver.get("https://www.saucedemo.com/");
     
-            Login login = new Login(driver);
-            // System.out.println("ini " + inputMap.get("email"));
-            login.loginApplication(inputMap.get("email"), inputMap.get("password"));
+        Login login = new Login(driver);
+        // System.out.println("ini " + inputMap.get("email"));
+        login.loginApplication(inputMap.get("email"), inputMap.get("password"));
 
         //Test Scenario Add Product
         Thread.sleep(1000);
@@ -37,6 +38,7 @@ public class CheckoutPO {
         String productName = inputMap.get("productName");
         
         ProductList productList = new ProductList(driver);
+
         productList.addProduct(productName);
 
         Thread.sleep(1000);
@@ -50,11 +52,9 @@ public class CheckoutPO {
 
         Thread.sleep(1000);
 
-        driver.findElement(By.xpath("//input[@type='text'][@id='first-name']")).sendKeys("Alberto");
-        driver.findElement(By.id("last-name")).sendKeys("Giround");
-        driver.findElement(By.xpath("//input[@placeholder='Zip/Postal Code']")).sendKeys("80331");
+        CheckoutInformationData checkoutInformationData = new CheckoutInformationData(driver);
 
-        driver.findElement(By.cssSelector("input#continue")).click();
+        checkoutInformationData.informationDataUser("Jordan", "Elijah", "820-0704");
 
         Thread.sleep(1000);
 
