@@ -1,3 +1,5 @@
+package automation;
+
 import java.time.Duration;
 import java.util.List;
 
@@ -5,6 +7,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+
+import org.testng.Assert;
 
 public class Checkout {
     public static void main(String[] args) throws InterruptedException {
@@ -25,17 +29,17 @@ public class Checkout {
         Thread.sleep(1000);
         driver.findElement(By.cssSelector("input.submit-button")).click();
 
-        //Test Scenario Product
+        //Test Scenario Add Product
         Thread.sleep(1000);
-        String ProductName = "Sauce Labs Bolt T-Shirt";
+        String productName = "Sauce Labs Bolt T-Shirt";
         WebElement cardElement = null;
 
         List<WebElement>listProducts = driver.findElements(By.cssSelector(".inventory_item"));
 
         for (WebElement webElement : listProducts) {
-            String product = webElement.findElement(By.cssSelector(".inventory_item_name ")).getText();
+            String product = webElement.findElement(By.cssSelector(".inventory_item_name")).getText();
             // System.out.println("ini adalah product " + product);
-            if (product.equals(ProductName)) {
+            if (product.equals(productName)) {
                 cardElement = webElement;
                 break;
             }
@@ -64,7 +68,13 @@ public class Checkout {
 
         driver.findElement(By.xpath("//button[@name='finish']")).click();
 
-        Thread.sleep(3000);
+        Thread.sleep(1000);
+
+        // Scenario confirmation page
+
+        String confirmationPage = driver.findElement(By.cssSelector(".complete-header")).getText();
+
+        Assert.assertTrue(confirmationPage.equals("Thank you for your order!"));
 
         driver.quit();  
 
